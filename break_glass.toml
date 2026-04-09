@@ -1,0 +1,25 @@
+# break-glass
+[[role]]
+name                 = "{{.nuon.install.id}}-superset-break-glass"
+description          = "grants elevated emergency access for install {{.nuon.install.id}}."
+display_name         = "Superset Break Glass"
+permissions_boundary = ""
+
+[[role.policies]]
+managed_policy_name = "AdministratorAccess"
+
+[[role.policies]]
+name = "remove-secrets-manager"
+contents = """
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenySecretsManagerAccess",
+      "Effect": "Deny",
+      "Action": ["secretsmanager:*"],
+      "Resource": "*"
+    }
+  ]
+}
+"""

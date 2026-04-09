@@ -1,0 +1,28 @@
+# policies
+[[policy]]
+type       = "kubernetes_cluster"
+engine     = "kyverno"
+components = ["*"]
+contents   = """
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: block-nginx-server-snippet
+spec:
+  validationFailureAction: Audit
+  rules:
+  - name: block-server-snippet
+    match:
+      any:
+      - resources:
+          kinds:
+          - Ingress
+    validate:
+      message: "server-snippet annotation is not allowed"
+      deny:
+        conditions:
+          any:
+          - key: '{{ request.object.metadata.annotations."nginx.ingress.kubernetes.io/server-snippet" || "" }}'
+            operator: NotEquals
+            value: ""
+"""

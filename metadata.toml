@@ -1,0 +1,4 @@
+# metadata
+version      = "v2"
+display_name = "Superset Helm Conversion"
+description  = "Nuon app config generated from Apache Superset Helm chart."

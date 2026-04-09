@@ -7,7 +7,7 @@ storage_driver = "configmap"
 dependencies   = ["rds_cluster", "redis"]
 
 [helm_repo]
-repo_url = "http://apache.github.io/superset/"
+repo_url = "https://apache.github.io/superset/"
 chart    = "superset"
 
 [[values_file]]

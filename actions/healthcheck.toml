@@ -1,0 +1,15 @@
+# action
+name    = "superset_healthcheck"
+timeout = "2m"
+
+[[triggers]]
+type = "manual"
+
+[[steps]]
+name = "check_superset_health"
+inline_contents = """
+#!/usr/bin/env sh
+set -eu
+kubectl get pods -n superset
+kubectl get svc -n superset
+"""

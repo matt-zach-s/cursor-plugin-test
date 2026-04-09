@@ -1,0 +1,15 @@
+# action
+name    = "superset_deployment_restart"
+timeout = "3m"
+
+[[triggers]]
+type = "manual"
+
+[[steps]]
+name = "restart_superset_deployments"
+inline_contents = """
+#!/usr/bin/env sh
+set -eu
+kubectl rollout restart deploy -n superset -l app.kubernetes.io/name=superset || true
+kubectl rollout status deploy -n superset -l app.kubernetes.io/name=superset --timeout=120s || true
+"""

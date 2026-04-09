@@ -1,6 +1,19 @@
 # inputs
 
 [[group]]
+name         = "dns"
+description  = "DNS configuration for install domains"
+display_name = "DNS"
+
+[[input]]
+name         = "domain"
+description  = "Root domain for Nuon-managed DNS"
+default      = "nuon.run"
+display_name = "Root Domain"
+group        = "dns"
+type         = "string"
+
+[[group]]
 name         = "superset"
 description  = "Apache Superset runtime configuration"
 display_name = "Superset"

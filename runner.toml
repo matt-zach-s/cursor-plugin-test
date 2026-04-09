@@ -1,0 +1,3 @@
+# runner
+runner_type = "aws"
+helm_driver = "configmap"
