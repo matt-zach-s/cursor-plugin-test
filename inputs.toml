@@ -1,0 +1,313 @@
+# inputs
+
+[[group]]
+name         = "superset"
+description  = "Apache Superset runtime configuration"
+display_name = "Superset"
+
+[[input]]
+name         = "superset_image_tag"
+description  = "Superset image tag to deploy"
+default      = "5.0.0"
+display_name = "Superset Image Tag"
+group        = "superset"
+type         = "string"
+
+[[input]]
+name         = "service_type"
+description  = "Kubernetes service type for Superset"
+default      = "ClusterIP"
+display_name = "Service Type"
+group        = "superset"
+type         = "string"
+
+[[input]]
+name         = "ingress_enabled"
+description  = "Enable ingress for Superset"
+default      = "true"
+display_name = "Enable Ingress"
+group        = "superset"
+type         = "bool"
+
+[[input]]
+name         = "ingress_class_name"
+description  = "Ingress class name (for example nginx or alb)"
+default      = "nginx"
+display_name = "Ingress Class"
+group        = "superset"
+type         = "string"
+
+[[input]]
+name         = "superset_hostname"
+description  = "Public hostname for Superset"
+default      = "superset.example.com"
+display_name = "Superset Hostname"
+group        = "superset"
+type         = "string"
+
+[[input]]
+name         = "load_examples"
+description  = "Load Superset example datasets during init"
+default      = "false"
+display_name = "Load Example Data"
+group        = "superset"
+type         = "bool"
+
+[[group]]
+name         = "scaling"
+description  = "Replica counts and optional background services"
+display_name = "Scaling"
+
+[[input]]
+name         = "web_replica_count"
+description  = "Number of Superset web replicas"
+default      = "2"
+display_name = "Web Replica Count"
+group        = "scaling"
+type         = "number"
+
+[[input]]
+name         = "worker_replica_count"
+description  = "Number of Superset worker replicas"
+default      = "2"
+display_name = "Worker Replica Count"
+group        = "scaling"
+type         = "number"
+
+[[input]]
+name         = "enable_celery_beat"
+description  = "Enable Celery Beat for scheduled tasks"
+default      = "true"
+display_name = "Enable Celery Beat"
+group        = "scaling"
+type         = "bool"
+
+[[input]]
+name         = "enable_celery_flower"
+description  = "Enable Celery Flower UI"
+default      = "false"
+display_name = "Enable Celery Flower"
+group        = "scaling"
+type         = "bool"
+
+[[input]]
+name         = "enable_websockets"
+description  = "Enable Superset websocket deployment"
+default      = "false"
+display_name = "Enable Websockets"
+group        = "scaling"
+type         = "bool"
+
+[[group]]
+name         = "admin"
+description  = "Superset admin bootstrap credentials"
+display_name = "Admin User"
+
+[[input]]
+name         = "create_admin_user"
+description  = "Create an admin user during init"
+default      = "true"
+display_name = "Create Admin User"
+group        = "admin"
+type         = "bool"
+
+[[input]]
+name         = "admin_username"
+description  = "Superset admin username"
+default      = "admin"
+display_name = "Admin Username"
+group        = "admin"
+type         = "string"
+
+[[input]]
+name         = "admin_firstname"
+description  = "Superset admin first name"
+default      = "Superset"
+display_name = "Admin First Name"
+group        = "admin"
+type         = "string"
+
+[[input]]
+name         = "admin_lastname"
+description  = "Superset admin last name"
+default      = "Admin"
+display_name = "Admin Last Name"
+group        = "admin"
+type         = "string"
+
+[[input]]
+name         = "admin_email"
+description  = "Superset admin email"
+default      = "admin@superset.com"
+display_name = "Admin Email"
+group        = "admin"
+type         = "string"
+
+[[input]]
+name         = "admin_password"
+description  = "Superset admin password"
+default      = "admin"
+display_name = "Admin Password"
+group        = "admin"
+type         = "string"
+sensitive    = true
+
+[[input]]
+name         = "superset_secret_key"
+description  = "Flask/Superset SECRET_KEY used for sessions and encryption"
+default      = ""
+display_name = "Superset Secret Key"
+group        = "admin"
+type         = "string"
+required     = true
+sensitive    = true
+
+[[group]]
+name         = "database"
+description  = "External PostgreSQL metadata database connection"
+display_name = "Database"
+
+[[input]]
+name         = "db_name"
+description  = "PostgreSQL database name for Superset metadata"
+default      = "superset"
+display_name = "Database Name"
+group        = "database"
+type         = "string"
+
+[[input]]
+name         = "db_username"
+description  = "PostgreSQL username for Superset metadata"
+default      = "superset"
+display_name = "Database Username"
+group        = "database"
+type         = "string"
+
+[[input]]
+name         = "db_password"
+description  = "PostgreSQL password for Superset metadata"
+default      = ""
+display_name = "Database Password"
+group        = "database"
+type         = "string"
+required     = true
+sensitive    = true
+
+[[group]]
+name         = "redis"
+description  = "External Redis connection settings"
+display_name = "Redis"
+
+[[input]]
+name         = "redis_cache_db"
+description  = "Redis database index for caching"
+default      = "1"
+display_name = "Redis Cache DB"
+group        = "redis"
+type         = "number"
+
+[[input]]
+name         = "redis_celery_db"
+description  = "Redis database index for Celery broker/result"
+default      = "0"
+display_name = "Redis Celery DB"
+group        = "redis"
+type         = "number"
+
+[[group]]
+name         = "resources"
+description  = "CPU and memory sizing for Superset pods"
+display_name = "Resources"
+
+[[input]]
+name         = "web_cpu_request"
+description  = "CPU request for web pods"
+default      = "250m"
+display_name = "Web CPU Request"
+group        = "resources"
+type         = "string"
+
+[[input]]
+name         = "web_memory_request"
+description  = "Memory request for web pods"
+default      = "512Mi"
+display_name = "Web Memory Request"
+group        = "resources"
+type         = "string"
+
+[[input]]
+name         = "web_cpu_limit"
+description  = "CPU limit for web pods"
+default      = "1000m"
+display_name = "Web CPU Limit"
+group        = "resources"
+type         = "string"
+
+[[input]]
+name         = "web_memory_limit"
+description  = "Memory limit for web pods"
+default      = "2Gi"
+display_name = "Web Memory Limit"
+group        = "resources"
+type         = "string"
+
+[[input]]
+name         = "worker_cpu_request"
+description  = "CPU request for worker pods"
+default      = "250m"
+display_name = "Worker CPU Request"
+group        = "resources"
+type         = "string"
+
+[[input]]
+name         = "worker_memory_request"
+description  = "Memory request for worker pods"
+default      = "512Mi"
+display_name = "Worker Memory Request"
+group        = "resources"
+type         = "string"
+
+[[input]]
+name         = "worker_cpu_limit"
+description  = "CPU limit for worker pods"
+default      = "1000m"
+display_name = "Worker CPU Limit"
+group        = "resources"
+type         = "string"
+
+[[input]]
+name         = "worker_memory_limit"
+description  = "Memory limit for worker pods"
+default      = "2Gi"
+display_name = "Worker Memory Limit"
+group        = "resources"
+type         = "string"
+
+[[group]]
+name         = "infrastructure"
+description  = "Managed data service sizing"
+display_name = "Infrastructure"
+
+[[input]]
+name         = "rds_instance_class"
+description  = "RDS instance class for Superset metadata DB"
+default      = "db.t4g.small"
+display_name = "RDS Instance Class"
+group        = "infrastructure"
+type         = "string"
+
+[[input]]
+name         = "rds_allocated_storage_gb"
+description  = "RDS allocated storage in GB"
+default      = "100"
+display_name = "RDS Storage (GB)"
+group        = "infrastructure"
+type         = "number"
+
+[[input]]
+name         = "redis_node_type"
+description  = "Redis node type"
+default      = "cache.t4g.small"
+display_name = "Redis Node Type"
+group        = "infrastructure"
+type         = "string"

@@ -1,0 +1,16 @@
+# terraform
+name              = "redis"
+type              = "terraform_module"
+terraform_version = "1.11.3"
+
+[public_repo]
+repo      = "your-org/your-infra-repo"
+directory = "nuon/components/redis"
+branch    = "main"
+
+[vars]
+name_prefix        = "superset-{{ .nuon.install.id }}"
+node_type          = "{{ .nuon.inputs.inputs.redis_node_type }}"
+engine_version     = "7"
+vpc_id             = "{{ .nuon.install.sandbox.outputs.vpc.id }}"
+private_subnet_ids = "{{ .nuon.install.sandbox.outputs.vpc.private_subnet_ids }}"

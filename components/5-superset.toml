@@ -1,0 +1,14 @@
+# helm
+name           = "superset"
+type           = "helm_chart"
+chart_name     = "superset"
+namespace      = "superset"
+storage_driver = "configmap"
+dependencies   = ["rds_cluster", "redis"]
+
+[helm_repo]
+repo_url = "http://apache.github.io/superset/"
+chart    = "superset"
+
+[[values_file]]
+contents = "./values/superset/values.yaml"

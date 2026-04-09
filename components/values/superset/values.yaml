@@ -1,0 +1,78 @@
+image:
+  repository: apachesuperset.docker.scarf.sh/apache/superset
+  tag: "{{ .nuon.inputs.inputs.superset_image_tag }}"
+
+service:
+  type: "{{ .nuon.inputs.inputs.service_type }}"
+  port: 8088
+
+ingress:
+  enabled: {{ .nuon.inputs.inputs.ingress_enabled }}
+  ingressClassName: "{{ .nuon.inputs.inputs.ingress_class_name }}"
+  hosts:
+    - "{{ .nuon.inputs.inputs.superset_hostname }}"
+
+supersetNode:
+  replicas:
+    enabled: true
+    replicaCount: {{ .nuon.inputs.inputs.web_replica_count }}
+  connections:
+    db_type: "postgresql"
+    db_host: "{{ .nuon.components.rds_cluster.outputs.address }}"
+    db_port: "{{ .nuon.components.rds_cluster.outputs.port }}"
+    db_user: "{{ .nuon.inputs.inputs.db_username }}"
+    db_pass: "{{ .nuon.inputs.inputs.db_password }}"
+    db_name: "{{ .nuon.inputs.inputs.db_name }}"
+    redis_host: "{{ .nuon.components.redis.outputs.host }}"
+    redis_port: "{{ .nuon.components.redis.outputs.port }}"
+    redis_user: ""
+    redis_cache_db: "{{ .nuon.inputs.inputs.redis_cache_db }}"
+    redis_celery_db: "{{ .nuon.inputs.inputs.redis_celery_db }}"
+  resources:
+    requests:
+      cpu: "{{ .nuon.inputs.inputs.web_cpu_request }}"
+      memory: "{{ .nuon.inputs.inputs.web_memory_request }}"
+    limits:
+      cpu: "{{ .nuon.inputs.inputs.web_cpu_limit }}"
+      memory: "{{ .nuon.inputs.inputs.web_memory_limit }}"
+
+supersetWorker:
+  replicas:
+    enabled: true
+    replicaCount: {{ .nuon.inputs.inputs.worker_replica_count }}
+  resources:
+    requests:
+      cpu: "{{ .nuon.inputs.inputs.worker_cpu_request }}"
+      memory: "{{ .nuon.inputs.inputs.worker_memory_request }}"
+    limits:
+      cpu: "{{ .nuon.inputs.inputs.worker_cpu_limit }}"
+      memory: "{{ .nuon.inputs.inputs.worker_memory_limit }}"
+
+supersetCeleryBeat:
+  enabled: {{ .nuon.inputs.inputs.enable_celery_beat }}
+
+supersetCeleryFlower:
+  enabled: {{ .nuon.inputs.inputs.enable_celery_flower }}
+
+supersetWebsockets:
+  enabled: {{ .nuon.inputs.inputs.enable_websockets }}
+
+init:
+  enabled: true
+  createAdmin: {{ .nuon.inputs.inputs.create_admin_user }}
+  loadExamples: {{ .nuon.inputs.inputs.load_examples }}
+  adminUser:
+    username: "{{ .nuon.inputs.inputs.admin_username }}"
+    firstname: "{{ .nuon.inputs.inputs.admin_firstname }}"
+    lastname: "{{ .nuon.inputs.inputs.admin_lastname }}"
+    email: "{{ .nuon.inputs.inputs.admin_email }}"
+    password: "{{ .nuon.inputs.inputs.admin_password }}"
+
+extraSecretEnv:
+  SUPERSET_SECRET_KEY: "{{ .nuon.inputs.inputs.superset_secret_key }}"
+
+postgresql:
+  enabled: false
+
+redis:
+  enabled: false
